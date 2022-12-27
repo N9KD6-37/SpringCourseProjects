@@ -1,28 +1,32 @@
 package org.example.library.controllers;
 
+import org.example.library.dao.PersonDAO;
 import org.example.library.model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
 
+    private final PersonDAO personDAO;
+
+    @Autowired
+    public PeopleController(PersonDAO personDAO) {
+        this.personDAO = personDAO;
+    }
+
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("people", List.of(
-                new Person(1,"John Dou", 1984),
-                new Person(2,"Stan Marsh", 1999)
-        ));
+        model.addAttribute("people", personDAO.index());
         return "people/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", new Person(1,"John Dou", 1984));
+        model.addAttribute("person", personDAO.show(id));
         return "people/show";
     }
 
@@ -33,7 +37,7 @@ public class PeopleController {
 
     @PostMapping()
     public String create(@ModelAttribute("person") Person person) {
-        System.out.println(person);
+        personDAO.save(person);
         return "redirect:/people";
     }
 

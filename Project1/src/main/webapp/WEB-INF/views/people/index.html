@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Index</title>
 </head>
 <body>
 
-<div>
-  <a href="#">Иванов Иван Иванович</a>
+<div th:each="person : ${people}">
+  <a href="#" th:text="${person.getName() + ', ' + person.getYearOfBirth()}">Иванов Иван Иванович</a>
 </div>
 
 <hr/>

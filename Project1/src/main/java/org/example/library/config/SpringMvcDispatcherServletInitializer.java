@@ -1,6 +1,7 @@
 package org.example.library.config;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.DispatcherType;
@@ -29,6 +30,7 @@ public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationCon
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
         registerCharacterEncodingFilter(servletContext);
+        registerHiddenFieldFilters(servletContext);
     }
 
     private void registerCharacterEncodingFilter(ServletContext servletContext) {
@@ -41,5 +43,11 @@ public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationCon
         FilterRegistration.Dynamic characterEncoding = servletContext.addFilter("characterEncoding",
                 characterEncodingFilter);
         characterEncoding.addMappingForUrlPatterns(dispatcherTypes,true, "/*");
+    }
+
+    private void registerHiddenFieldFilters(ServletContext servletContext) {
+        servletContext.addFilter("hiddenHttpMethodFilter",
+                new HiddenHttpMethodFilter())
+                .addMappingForUrlPatterns(null, true, "/*");
     }
 }

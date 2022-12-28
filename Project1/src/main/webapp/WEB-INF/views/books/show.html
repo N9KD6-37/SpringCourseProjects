@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Show book</title>
-
 </head>
 <body>
-<p>Sample book</p>
+
+<p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}">Sample book</p>
+
 <form>
   <label for="person">Выберите читателя:</label>
   <select id="person">
@@ -15,5 +16,14 @@
 
   <input type="submit" value="Выдать книгу">
 </form>
+
+<form th:action="@{/books/{id}/edit(id=${book.getId()})}">
+  <input type="submit" value="Редактировать">
+</form>
+
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+  <input type="submit" value="Удалить">
+</form>
+
 </body>
 </html>

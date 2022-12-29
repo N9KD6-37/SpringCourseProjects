@@ -1,9 +1,23 @@
 package org.example.library.model;
 
+
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+
 public class Book {
     private int id;
+    @NotBlank(message = "Title should not be blank")
+    @Size(min = 2, max = 50, message = "Title should be between 2 and 50")
     private String title;
+    @Size(min = 2, max = 30, message = "Author should be between 2 and 30")
+    @Pattern(regexp = "[A-ZА-Я]\\D+ [A-ZА-Я]\\D+( [A-ZА-Я]\\D)?", message = "Author should be fully identified")
     private String author;
+    @Range(min = 1900, max = 2023, message = "Year of publication should be between 1900 and 2023")
     private int yearOfPublication;
 
     private int personId;

@@ -52,4 +52,12 @@ public class BookDAO {
     public void removeFromPerson(int bookId) {
         jdbcTemplate.update("UPDATE Book SET person_id=NULL WHERE id=?", bookId);
     }
+
+    public List<Book> getBooksByPersonId(int personId) {
+        BeanPropertyRowMapper<Book> rowMapper = new BeanPropertyRowMapper<>(Book.class);
+        rowMapper.setPrimitivesDefaultedForNullValue(true);
+        return jdbcTemplate.query("SELECT * FROM Book WHERE person_id=?",
+                new Object[]{personId},
+                rowMapper);
+    }
 }

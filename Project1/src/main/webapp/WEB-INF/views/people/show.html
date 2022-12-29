@@ -6,7 +6,8 @@
 </head>
 <body>
 <p th:text="${person.getName() + ', ' + person.getYearOfBirth()}">Иванов Иван Иванович, 1984</p>
-<p>No books</p>
+<p th:if="${#lists.isEmpty(books)}">На руках ни одной книги</p>
+<p th:each="book : ${books}" th:text="${book.getTitle()}">No books</p>
 
 <hr/>
 

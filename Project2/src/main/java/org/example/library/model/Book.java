@@ -3,33 +3,47 @@ package org.example.library.model;
 
 import org.hibernate.validator.constraints.Range;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 
+@Entity
+@Table(name = "Book")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "title")
     @NotBlank(message = "Title should not be blank")
     @Size(min = 2, max = 50, message = "Title should be between 2 and 50")
     private String title;
+    @Column(name = "author")
     @Size(min = 2, max = 30, message = "Author should be between 2 and 30")
     @Pattern(regexp = "[A-ZА-Я]\\D+ [A-ZА-Я]\\D+( [A-ZА-Я]\\D)?", message = "Author should be fully identified")
     private String author;
+    @Column(name = "year_of_publication")
     @Range(min = 1900, max = 2023, message = "Year of publication should be between 1900 and 2023")
     private int yearOfPublication;
 
-    private int personId;
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person person;
+
+    @Column(name = "taken_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime takenAt;
 
     public Book() {
     }
 
-    public Book(int id, String title, String author, int yearOfPublication, int personId) {
-        this.id = id;
+    public Book(String title, String author, int yearOfPublication) {
         this.title = title;
         this.author = author;
         this.yearOfPublication = yearOfPublication;
-        this.personId = personId;
     }
 
     public int getId() {
@@ -64,11 +78,19 @@ public class Book {
         this.yearOfPublication = yearOfPublication;
     }
 
-    public int getPersonId() {
-        return personId;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public LocalDateTime getTakenAt() {
+        return takenAt;
+    }
+
+    public void setTakenAt(LocalDateTime takenAt) {
+        this.takenAt = takenAt;
     }
 }

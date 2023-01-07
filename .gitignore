@@ -1,4 +1,6 @@
+#Database properties
 database.properties
+hibernate.properties
 ### Maven template
 target/
 pom.xml.tag

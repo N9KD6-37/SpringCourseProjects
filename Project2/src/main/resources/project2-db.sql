@@ -11,5 +11,6 @@ CREATE TABLE Book
     title               varchar(50) NOT NULL,
     author              varchar(30) NOT NULL,
     year_of_publication int CHECK ( year_of_publication BETWEEN 1900 AND date_part('year', now())),
-    person_id           int         REFERENCES Person (id) ON DELETE SET NULL
+    person_id           int         REFERENCES Person (id) ON DELETE SET NULL,
+    taken_at            timestamp
 );

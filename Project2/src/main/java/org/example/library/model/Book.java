@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Entity
@@ -35,7 +35,7 @@ public class Book {
 
     @Column(name = "taken_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime takenAt;
+    private Date takenAt;
 
     public Book() {
     }
@@ -86,11 +86,11 @@ public class Book {
         this.person = person;
     }
 
-    public LocalDateTime getTakenAt() {
+    public Date getTakenAt() {
         return takenAt;
     }
 
-    public void setTakenAt(LocalDateTime takenAt) {
+    public void setTakenAt(Date takenAt) {
         this.takenAt = takenAt;
     }
 }

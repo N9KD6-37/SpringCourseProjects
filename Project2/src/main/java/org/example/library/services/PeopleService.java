@@ -2,6 +2,7 @@ package org.example.library.services;
 
 import org.example.library.model.Person;
 import org.example.library.repositories.PeopleRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +25,11 @@ public class PeopleService {
     }
 
     public Person findById(int id) {
-        Optional<Person> person = peopleRepository.findById(id);
-        return person.orElse(null);
+        Person person = peopleRepository.findById(id).get();
+        if (person == null)
+            return person;
+        Hibernate.initialize(person.getBooks());
+        return person;
     }
 
     @Transactional

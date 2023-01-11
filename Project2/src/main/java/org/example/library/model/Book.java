@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 @Entity
@@ -36,6 +37,9 @@ public class Book {
     @Column(name = "taken_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date takenAt;
+
+    @Transient
+    private boolean isOverdue;
 
     public Book() {
     }
@@ -92,5 +96,14 @@ public class Book {
 
     public void setTakenAt(Date takenAt) {
         this.takenAt = takenAt;
+    }
+
+    public boolean isOverdue() {
+        if (takenAt == null)
+            return false;
+        Date now = new Date();
+        long diffInMillies = Math.abs(now.getTime() - takenAt.getTime());
+        isOverdue = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS) > 10;
+        return isOverdue;
     }
 }

@@ -8,9 +8,9 @@
 
 <p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}">Sample book</p>
 
-<div th:switch="${book.getPersonId()}">
+<div th:switch="${book.getPerson()}">
 
-  <form th:case="0" th:method="PATCH" th:action="@{/books/{id}/add(id=${book.getId()})}">
+  <form th:case="null" th:method="PATCH" th:action="@{/books/{id}/add(id=${book.getId()})}">
     <label for="person">Выберите читателя:</label>
     <select th:object="${person}" th:field="*{id}" id="person">
       <option th:each="person : ${people}" th:value="${person.getId()}"

@@ -60,4 +60,8 @@ public class BooksService {
         book.setTakenAt(null);
         booksRepository.save(book);
     }
+
+    public List<Book> findBooksByTitleStartingWith(String title) {
+        return booksRepository.findBooksByTitleStartingWith(title);
+    }
 }

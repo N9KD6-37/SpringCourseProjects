@@ -81,9 +81,22 @@ public class BooksController {
         return "redirect:/books/" + id;
     }
 
-    @PatchMapping("{id}/return")
+    @PatchMapping("/{id}/return")
     public String returnBook(@PathVariable("id") int id) {
         booksService.returnBook(id);
         return "redirect:/books/" + id;
     }
+
+    @GetMapping("/search")
+    public String search() {
+        return "books/search";
+    }
+
+    @PostMapping("/search")
+    public String search(@RequestParam String query, Model model) {
+        model.addAttribute("books", booksService.findBooksByTitleStartingWith(query));
+        return "books/search";
+    }
+
+
 }

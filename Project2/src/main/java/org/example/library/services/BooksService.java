@@ -3,6 +3,8 @@ package org.example.library.services;
 import org.example.library.model.Book;
 import org.example.library.model.Person;
 import org.example.library.repositories.BooksRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,5 +65,13 @@ public class BooksService {
 
     public List<Book> findBooksByTitleStartingWith(String title) {
         return booksRepository.findBooksByTitleStartingWith(title);
+    }
+
+    public List<Book> findWithPagination(Integer page, Integer booksPerPage, boolean sortByYear) {
+        if (sortByYear) {
+            return booksRepository.findAll(PageRequest.of(page, booksPerPage, Sort.by("year"))).getContent();
+        } else {
+            return booksRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
+        }
     }
 }

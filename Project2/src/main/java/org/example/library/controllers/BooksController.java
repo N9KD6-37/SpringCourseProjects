@@ -74,7 +74,7 @@ public class BooksController {
         if (bindingResult.hasErrors()) {
             return "books/edit";
         }
-        booksService.update(book);
+        booksService.update(id, book);
         return "redirect:/books";
     }
 

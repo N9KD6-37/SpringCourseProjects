@@ -45,22 +45,18 @@ public class BooksService {
 
     @Transactional
     public void addToPerson(int id, Person person) {
-        Book book = booksRepository.findById(id).orElse(null);
-        if (book == null)
-            return;
-        book.setPerson(person);
-        book.setTakenAt(new Date());
-        booksRepository.save(book);
+        booksRepository.findById(id).ifPresent(book -> {
+            book.setPerson(person);
+            book.setTakenAt(new Date());
+        });
     }
 
     @Transactional
     public void returnBook(int id) {
-        Book book = booksRepository.findById(id).orElse(null);
-        if (book == null)
-            return;
-        book.setPerson(null);
-        book.setTakenAt(null);
-        booksRepository.save(book);
+        booksRepository.findById(id).ifPresent(book -> {
+            book.setPerson(null);
+            book.setTakenAt(null);
+        });
     }
 
     public List<Book> findBooksByTitleStartingWith(String title) {

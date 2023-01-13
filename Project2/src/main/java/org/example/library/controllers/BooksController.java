@@ -106,6 +106,4 @@ public class BooksController {
         model.addAttribute("books", booksService.findBooksByTitleStartingWith(query));
         return "books/search";
     }
-
-
 }

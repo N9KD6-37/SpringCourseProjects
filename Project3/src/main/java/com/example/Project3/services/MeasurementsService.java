@@ -11,12 +11,12 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class MeasurmentsService {
+public class MeasurementsService {
     private final MeasurementsRepository measurementsRepository;
     private final SensorsService sensorsService;
 
     @Autowired
-    public MeasurmentsService(MeasurementsRepository measurementsRepository, SensorsService sensorsService) {
+    public MeasurementsService(MeasurementsRepository measurementsRepository, SensorsService sensorsService) {
         this.measurementsRepository = measurementsRepository;
         this.sensorsService = sensorsService;
     }

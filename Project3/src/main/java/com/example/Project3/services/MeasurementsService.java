@@ -26,6 +26,7 @@ public class MeasurementsService {
     }
 
     public void addMeasurment(Measurement measurement) {
+        enrichMeasurement(measurement);
         measurementsRepository.save(measurement);
     }
 

@@ -41,7 +41,7 @@ public class MeasurementsController {
             returnErrorsToClient(bindingResult);
         }
 
-        measurementsService.addMeasurment(measurementToAdd);
+        measurementsService.addMeasurement(measurementToAdd);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

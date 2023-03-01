@@ -25,7 +25,8 @@ public class MeasurementsService {
         return measurementsRepository.findAll();
     }
 
-    public void addMeasurment(Measurement measurement) {
+    @Transactional
+    public void addMeasurement(Measurement measurement) {
         enrichMeasurement(measurement);
         measurementsRepository.save(measurement);
     }

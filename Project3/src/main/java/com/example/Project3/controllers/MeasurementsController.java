@@ -40,6 +40,11 @@ public class MeasurementsController {
                 .collect(Collectors.toList()));
     }
 
+    @GetMapping("/rainyDaysCount")
+    public Long getRainyDaysCount() {
+        return measurementsService.findAll().stream().filter(Measurement::getRaining).count();
+    }
+
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> add(@RequestBody @Valid MeasurementDTO measurementDTO,
                                           BindingResult bindingResult) {

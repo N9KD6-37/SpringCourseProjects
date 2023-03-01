@@ -1,6 +1,7 @@
 package com.example.Project3.controllers;
 
 import com.example.Project3.dto.MeasurementDTO;
+import com.example.Project3.dto.MeasurementsResponse;
 import com.example.Project3.models.Measurement;
 import com.example.Project3.services.MeasurementsService;
 import com.example.Project3.util.MeasurementErrorResponse;
@@ -14,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.stream.Collectors;
 
 import static com.example.Project3.util.ErrorsUtil.returnErrorsToClient;
 
@@ -29,6 +32,12 @@ public class MeasurementsController {
         this.measurementsService = measurementsService;
         this.measurementValidator = measurementValidator;
         this.modelMapper = modelMapper;
+    }
+
+    @GetMapping
+    public MeasurementsResponse getMeasurements() {
+        return new MeasurementsResponse(measurementsService.findAll().stream().map(this::convertToMeasurementDTO)
+                .collect(Collectors.toList()));
     }
 
     @PostMapping("/add")
@@ -47,6 +56,10 @@ public class MeasurementsController {
 
     private Measurement convertToMeasurement(MeasurementDTO measurementDTO) {
         return modelMapper.map(measurementDTO, Measurement.class);
+    }
+
+    private MeasurementDTO convertToMeasurementDTO(Measurement measurement) {
+        return modelMapper.map(measurement, MeasurementDTO.class);
     }
 
     @ExceptionHandler

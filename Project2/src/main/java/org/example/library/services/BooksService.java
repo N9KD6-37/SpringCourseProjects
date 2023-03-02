@@ -69,7 +69,8 @@ public class BooksService {
 
     public List<Book> findWithPagination(Integer page, Integer booksPerPage, boolean sortByYear) {
         if (sortByYear) {
-            return booksRepository.findAll(PageRequest.of(page, booksPerPage, Sort.by("year"))).getContent();
+            return booksRepository.findAll(PageRequest.of(page, booksPerPage, Sort.by("yearOfPublication")))
+                    .getContent();
         } else {
             return booksRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
         }
